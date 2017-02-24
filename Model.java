@@ -6,13 +6,17 @@ import java.util.Set;
 public class Model {
 	
 	private LinkedList<Movie> movies;
+	final private int weekday_open = 480;
+	final private int weekday_close = 1380;
+	final private int weekend_open = 630;
+	final private int weekend_close = 1410;
 	
 	public Model(File file) {
 		
 		try {				
 			FileMovieMaker fmm = FileMovieMaker.make(file);
 			movies = fmm.getMovies();
-			printTimesForMovie(movies.getFirst());
+			printAllShowtimesForDate("Thursday");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (FileMovieMaker.FormatException e) {
@@ -20,20 +24,51 @@ public class Model {
 		}	
 	}
 	
-	public void printTimesForMovie(Movie movie) {
+	public void printAllShowtimesForDate(String date) {
+		int open;
+		int close;
+		if (date.equals("Monday") || date.equals("Tuesday") || date.equals("Wednesday") 
+			|| date.equals("Thursday")) {
+			open = weekday_open;
+			close = weekday_close;
+		} else {
+			open = weekend_open;
+			close = weekend_close;
+		}
+		
+		System.out.println(date);
+		System.out.println("");
+		
+		for (Movie movie: movies) {
+			printTimesForMovie(movie, open, close - 1);
+			System.out.println("");
+		}
+	}
+	
+	//formats and prints the movie title and showing times given a 
+	//movie, opening, and closing time
+	public void printTimesForMovie(Movie movie, int open, int close) {
 		String line = movie.getTitle() + " - " + "Rated " + movie.getRating() +", " + Model.getProperTime(movie.getMinutes());
 		System.out.println(line);
-		LinkedList<String> times = getTimes(movie, 480, 1379);
+		LinkedList<String> times = getTimes(movie, open, close);
 		for (String time : times) {
 			System.out.println(time);
 		}
 	}
 	
-	public LinkedList<String> getTimes(Movie movie, int open, int endTime) {
+	//given an opening time and closing time for the theatre
+	//returns an ordered list of lines of consisting of showing times  
+	public LinkedList<String> getTimes(Movie movie, int open, int close) {
 		LinkedList<String> times = new LinkedList<String>();
 		
 		int duration = movie.getMinutes();
-		int startTime = endTime - duration;
+		int endTime = close;
+		int startTime = close - duration;
+		
+		int adjustment = startTime % 5;
+		
+		endTime -= adjustment;
+		startTime -= adjustment;
 		
 		while(startTime > open + 60) {
 			String line = "  " + Model.getProperTime(startTime) + " - " + Model.getProperTime(endTime);
@@ -41,6 +76,11 @@ public class Model {
 			
 			endTime = startTime - 36;
 			startTime = endTime - duration;
+			
+			adjustment = startTime % 5;
+			
+			endTime -= adjustment;
+			startTime -= adjustment;
 		}
 		
 		return times;
