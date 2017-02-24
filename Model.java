@@ -86,6 +86,8 @@ public class Model {
 		return times;
 	}
 		
+	//returns a formatted String corresponding to the number of minutes since 0:00
+	//ex: 623 minutes -> "10:23"
 	public static String getProperTime(int minutes) {
 		int hours = minutes / 60;
 		int min = minutes % 60;
