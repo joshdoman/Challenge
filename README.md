@@ -14,4 +14,4 @@ TBD
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Josh Doman** - *Initial work* - [Challenge](https://github.com/joshdoman/Challenge)
