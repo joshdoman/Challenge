@@ -1,9 +1,10 @@
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.TreeSet;
 import java.io.* ;
 
 public class FileMovieMaker {
 
-  private Map<String, Movie> movies;
+  private LinkedList<Movie> movies;
 	
   /** A special purpose exception class to indicate errors when reading 
    *  the input for the FileCorrector.
@@ -24,12 +25,13 @@ public class FileMovieMaker {
    */
   public FileMovieMaker(Reader r) throws IOException, FormatException {
 	  if (r == null) throw new IllegalArgumentException();
-//	  moves = new LinkedList<Move>();
 	  BufferedReader br = new BufferedReader(r);
+	  movies = new LinkedList<Movie>();
 	  try {
+		  br.readLine();
 		  for(String line = br.readLine(); line != null; line = br.readLine()) {
-			  Move thisMove = getMoveFromLine(line);
-			  if (thisMove != null) moves.add(thisMove);
+			  Movie m = FileMovieMaker.getMovieFromLine(line);
+			  movies.add(m);
 		  }
 	  } catch (IOException e) {
 		  throw new IOException("Reading error");
@@ -59,11 +61,16 @@ public class FileMovieMaker {
 	  index = str.indexOf(":");
 	  int hours = Integer.valueOf(str.substring(0, index));
 	  int minutes = Integer.valueOf(str.substring(index+1));
+	  int totalMinutes = 60*hours + minutes;
 	  
-	  return new Movie(title, year, rating, hours, minutes);
+	  return new Movie(title, year, rating, totalMinutes);
   }
   
-
+  //returns a set of all movies
+  public LinkedList<Movie> getMovies() {
+	  return movies;
+  }
+  
   /** Construct a FileMovieMaker from a file.
    *
    * @param filename of file to read from

@@ -4,14 +4,12 @@ public class Movie {
 	final private String title;
 	final private int year;
 	final private String rating;
-	final private int hours;
 	final private int minutes;
 	
-	public Movie(String title, int year, String rating, int hours, int minutes) {
+	public Movie(String title, int year, String rating, int minutes) {
 		this.title = title;
 		this.year = year;
 		this.rating = rating;
-		this.hours = hours;
 		this.minutes = minutes;
 	}
 	
@@ -27,11 +25,7 @@ public class Movie {
 		return rating;
 	}
 	
-	public int getHours() {
-		return hours;
-	}
-	
-	public int minutes() {
+	public int getMinutes() {
 		return minutes;
 	}
 	
@@ -52,9 +46,6 @@ public class Movie {
 	        return false;
 	    }
 	    if (this.year != other.year) {
-	        return false;
-	    }
-	    if (this.hours != other.hours) {
 	        return false;
 	    }
 	    if (this.minutes != other.minutes) {
