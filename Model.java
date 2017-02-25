@@ -16,7 +16,6 @@ public class Model {
 		try {				
 			FileMovieMaker fmm = FileMovieMaker.make(file);
 			movies = fmm.getMovies();
-			printAllShowtimesForDate("Thursday");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (FileMovieMaker.FormatException e) {

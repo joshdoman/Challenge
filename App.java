@@ -8,7 +8,14 @@ public class App {
 			File file = new File(args[0]);
 			
 			Model model = new Model(file);
-			
+			model.printAllShowtimesForDate("Sunday");
+			model.printAllShowtimesForDate("Monday");
+			model.printAllShowtimesForDate("Tuesday");
+			model.printAllShowtimesForDate("Wednesday");
+			model.printAllShowtimesForDate("Thursday");
+			model.printAllShowtimesForDate("Friday");
+			model.printAllShowtimesForDate("Saturday");
+
 		}
 	}
 	
